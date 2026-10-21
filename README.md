@@ -1,117 +1,100 @@
-# Waffle Films Co. — Kerala Wedding Photography & Videography
+# Waffle Film Co. — Kerala Wedding Photography & Videography
 
-**Waffle Films Co.** is a wedding photography and videography company based in Kerala, India. The project is a modern, interactive website built with React and Framer Motion, designed to showcase wedding portfolios and capture client leads through a dynamic user experience.
+A cinematic, editorial-style wedding photography and cinematography portfolio website for **Waffle Film Co.**, a premier wedding studio based in Kerala, India.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-- **Modern UI/UX** — Built with **React** and styled with **Tailwind CSS**, featuring smooth animations, scrolling effects, and a responsive layout.
-- **Interactive Animations** — Enhanced with **Framer Motion**, the site includes parallax scrolling, hover effects, and custom transitions that make the portfolio come alive.
-- **Video Integration** — Seamless embedding of wedding trailers and highlight reels from **YouTube**, allowing clients to view full videos directly on the site.
-- **Portfolio Gallery** — A comprehensive gallery displaying high-quality wedding photos across multiple categories: Engagements, Weddings, Highlights, and Pre-shoots.
-- **Lead Capture System** — An integrated contact form that collects client details including name, email, phone, event type, budget, and message.
-- **Client Communication** — Features a WhatsApp chat button for instant messaging and a clickable email address for direct contact.
+- **Cinematic Luxury & Editorial Layouts**: Warm ivory (#F5F0E8), charcoal (#242321), and champagne (#B99B73) color harmony paired with Cormorant Garamond serif headings and DM Sans body typography.
+- **Editorial Wedding Stories**: Asymmetric storytelling grid showcasing traditional Kerala weddings, candid portraiture, and celebration moments.
+- **Curated Portfolio Gallery**: Responsive multi-column gallery with dynamic category filtering (*All, Ceremonies, Portraits, Details, Moments*).
+- **Full-Screen Interactive Lightbox**: Immersive full-screen image viewer with previous/next controls, keyboard navigation (Left/Right arrow keys, Escape to close), photo counters, and story descriptions.
+- **Wedding Cinema & Highlight Previews**: Prominent featured wedding film with embedded video playback plus a curated grid of additional highlight film previews.
+- **Seamless Lead Engagement**: Direct WhatsApp enquiry CTA, email links, phone placeholders, and comprehensive social links (Instagram, Threads, YouTube, Facebook, Linktree).
+- **Accessibility & Motion Restraint**: Smooth transitions powered by Motion for React, respecting `prefers-reduced-motion` settings.
 
-## 📋 Tech Stack
+---
 
-- **Core Framework**: React 18
-- **Styling & Layout**: Tailwind CSS, clsx, tailwind-merge
-- **Animation**: Framer Motion
-- **Icons**: Lucide React
-- **Routing**: React Router DOM
-- **Form Validation**: React Hook Form, Zod
-- **Testing**: Vitest, Playwright, Testing Library
-- **Development**: Vite
+## 🛠 Tech Stack
 
-## 📦 Installation & Setup
+- **Framework**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vite.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with native `@theme` tokens
+- **Animations**: [Motion for React](https://motion.dev/) (formerly Framer Motion)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Linting**: [Oxlint](https://oxc.rs/docs/guide/usage/linter.html)
 
-Follow these steps to get a local development environment running:
+---
 
-1.  **Clone the repository**
-    ```bash
-    git clone <repository-url>
-    cd waffle-films-co
-    ```
+## 📂 Content Architecture & How to Update Media
 
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Run the development server**
-    ```bash
-    npm run dev
-    ```
-    The application will be available at `http://localhost:5173`.
-
-4.  **Run tests**
-    ```bash
-    npm test         # Unit tests
-    npm run test:e2e # E2E tests
-    ```
-
-5.  **Build for production**
-    ```bash
-    npm run build
-    ```
-
-## 🗂 Project Structure
-
-The project follows a standard React application structure:
+All images, stories, videos, and contact information are centralized in a single module:
 
 ```
-waffle-films-co/
-├── src/
-│   ├── components/          # Reusable components (Header, Footer, VideoEmbed, etc.)
-│   ├── pages/               # Page components (HomePage, ContactPage, etc.)
-│   ├── hooks/               # Custom React hooks
-│   ├── api/                 # API integration modules (mock data)
-│   ├── utils/               # Utility functions (helpers, validators)
-│   ├── assets/              # Static assets (images, fonts)
-│   └── App.jsx              # Main application component
-├── public/                  # Public assets
-└── vite.config.js           # Vite configuration
+src/data/content.ts
 ```
 
-## 🛠 Development
+### To Update Images & Portfolio:
+1. Open `src/data/content.ts`.
+2. Replace the URLs in `images.hero`, `images.stories`, and `images.gallery` with your studio's high-resolution photography.
+3. Update the `title`, `location`, `category`, and `description` fields for each story.
 
-### Adding Video Content
+### To Update Wedding Films:
+1. In `src/data/content.ts`, update `featuredFilm` and `additionalFilms`.
+2. Replace `videoUrl` with the studio's YouTube or Vimeo embed links (e.g. `https://www.youtube.com/embed/VIDEO_ID`).
+3. Set the respective video thumbnails and durations.
 
-To add a new wedding video, update the `VideoGrid` component or the `mockApi.js` file by adding a new video object with the required fields:
+### To Update Contact Information:
+1. Update `contact.whatsapp`, `contact.phone`, `contact.email`, and social media links in `src/data/content.ts`.
 
-- `id`: Unique identifier
-- `title`: Video title
-- `url`: YouTube video URL
-- `thumbnail`: Preview image URL
-- `duration`: Video length (e.g., "5:30")
+---
 
-### Handling Portfolio Images
+## 🚀 Getting Started
 
-The portfolio images are currently hardcoded. To update the gallery:
-1.  Place your image files in `src/assets/portfolio/`.
-2.  Update the `galleryData` array in `src/pages/GalleryPage.jsx` with the new image paths and captions.
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- npm
 
-### Environment Variables
-
-While the current build uses mock data, you can configure environment variables in a `.env` file at the root of the project (if needed for future API integrations):
-
-```env
-VITE_API_URL=https://api.wafflefilms.co
-VITE_YOUTUBE_API_KEY=your-key-here
+### Installation
+```bash
+npm install
 ```
 
-## 🧪 Testing
+### Development Server
+```bash
+npm run dev
+```
+The site runs locally at `http://localhost:5173`.
 
-The project includes comprehensive tests to ensure stability:
+### Quality & Linter Checks
+```bash
+npm run lint
+```
 
-- **Unit Tests**: Run with `npm test` (using Vitest and Testing Library).
-- **E2E Tests**: Run with `npm run test:e2e` (using Playwright).
+### Production Build
+```bash
+npm run build
+```
+Generates an optimized static production bundle in `dist/`.
 
-## 🤝 Contributing
+---
 
-Contributions are welcome! Feel free to open a Pull Request or Issue if you find any bugs or have suggestions for new features.
+## 🌐 Zero-Cost Deployment (Cloudflare Pages)
+
+This project is a 100% static frontend application designed for free hosting on **Cloudflare Pages**:
+
+1. Push this repository to GitHub.
+2. In the [Cloudflare Dashboard](https://dash.cloudflare.com/), go to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select your repository (`waffle-films-co`).
+4. Configure the build settings:
+   - **Framework preset**: `Vite`
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+5. Click **Save and Deploy**. Your website will be live on a free `*.pages.dev` subdomain with global CDN caching and SSL.
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+Private portfolio project for Waffle Film Co.

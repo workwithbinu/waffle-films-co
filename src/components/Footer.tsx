@@ -19,8 +19,10 @@ function InstagramIcon({ size = 14 }: { size?: number }) {
   );
 }
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Footer() {
-  const year = new Date().getFullYear();
+  const year = CURRENT_YEAR;
 
   return (
     <footer className="bg-charcoal border-t border-ivory/[0.06]">
