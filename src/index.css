@@ -124,3 +124,103 @@ img {
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 4vw, 4rem);
 }
+
+/* ============================================================
+   Responsive & Touch-Friendly Card Overlay System
+   ============================================================ */
+
+/* 1. Base / Mobile Viewports (<= 768px) and Touch Devices:
+   - Captions and scrim overlays are persistently legible.
+   - Zero layout shifts, zero sticky hover bugs, zero missed taps.
+*/
+.card-overlay-scrim {
+  opacity: 1;
+  transition: opacity 0.4s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.card-overlay-caption {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)),
+              transform 0.4s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.card-overlay-badge {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)),
+              transform 0.3s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.card-image-hover {
+  transform: scale(1);
+}
+
+/* 2. Desktop with True Hover & Fine Pointer (> 768px):
+   Reveals captions & overlays smoothly only upon mouseover / keyboard focus.
+*/
+@media (hover: hover) and (pointer: fine) and (min-width: 769px) {
+  .card-overlay-scrim {
+    opacity: 0;
+  }
+  .group:hover .card-overlay-scrim,
+  .group:focus-visible .card-overlay-scrim,
+  .group[data-overlay-active="true"] .card-overlay-scrim {
+    opacity: 1;
+  }
+
+  .card-overlay-caption {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  .group:hover .card-overlay-caption,
+  .group:focus-visible .card-overlay-caption,
+  .group[data-overlay-active="true"] .card-overlay-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card-overlay-badge {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  .group:hover .card-overlay-badge,
+  .group:focus-visible .card-overlay-badge,
+  .group[data-overlay-active="true"] .card-overlay-badge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card-image-hover {
+    transition: transform 0.8s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  .group:hover .card-image-hover,
+  .group:focus-visible .card-image-hover {
+    transform: scale(1.04);
+  }
+}
+
+/* 3. Explicit Touch Devices Overrides:
+   Ensure coarse pointers and touchscreens never suffer from sticky hover states.
+*/
+@media (hover: none), (pointer: coarse) {
+  .card-overlay-scrim {
+    opacity: 1 !important;
+  }
+  .card-overlay-caption {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  .card-overlay-badge {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  .card-image-hover,
+  .group:hover .card-image-hover,
+  .group-hover\:scale-105,
+  .group-hover\:scale-\[1\.03\],
+  .group-hover\:scale-\[1\.04\] {
+    transform: none !important;
+  }
+}
+

@@ -86,34 +86,45 @@ export default function Gallery({ onOpenLightbox }: GalleryProps) {
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 onClick={() => onOpenLightbox(item)}
-                className="group relative cursor-pointer overflow-hidden aspect-[4/5] bg-ivory shadow-sm"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onOpenLightbox(item);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`View photo: ${item.title}, ${item.location}`}
+                className="group relative cursor-pointer overflow-hidden aspect-[4/5] bg-ivory shadow-sm rounded-xs select-none focus-visible:outline-2 focus-visible:outline-champagne focus-visible:outline-offset-2"
               >
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                />
+                <div className="relative w-full h-full overflow-hidden">
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] card-image-hover"
+                  />
 
-                {/* Dark gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                  {/* Scrim overlay: persistent on touch/mobile, hover-reveal on desktop */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/45 via-45% to-transparent card-overlay-scrim pointer-events-none" />
 
-                {/* Expand icon in top right */}
-                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-charcoal/50 backdrop-blur-sm text-ivory flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0">
-                  <Maximize2 size={15} />
-                </div>
+                  {/* Expand icon in top right */}
+                  <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-9 h-9 rounded-full bg-charcoal/60 backdrop-blur-md text-ivory flex items-center justify-center border border-ivory/15 card-overlay-badge shadow-sm pointer-events-none">
+                    <Maximize2 size={15} />
+                  </div>
 
-                {/* Info on hover */}
-                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 text-ivory">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-champagne-light font-sans font-medium mb-1 block">
-                    {item.category}
-                  </span>
-                  <h3 className="font-serif text-xl text-white mb-1">
-                    {item.title}
-                  </h3>
-                  <div className="flex items-center gap-1 text-[11px] text-ivory/60 font-sans">
-                    <MapPin size={11} className="text-champagne-light" />
-                    <span>{item.location}</span>
+                  {/* Caption info */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 md:p-6 card-overlay-caption text-ivory pointer-events-none">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-champagne-light font-sans font-medium mb-1.5 px-2 py-0.5 rounded-full bg-charcoal/60 border border-ivory/10 inline-block">
+                      {item.category}
+                    </span>
+                    <h3 className="font-serif text-lg sm:text-xl text-white mb-1 leading-snug line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-ivory/70 font-sans">
+                      <MapPin size={11} className="text-champagne-light shrink-0" />
+                      <span className="truncate">{item.location}</span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
